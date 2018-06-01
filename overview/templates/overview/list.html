@@ -1,0 +1,42 @@
+{% extends 'app_layouts/layout_base.html' %}
+{% block opal_js %}{% endblock opal_js %}
+
+{% block content %}
+  <div class="content-offset outer-container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-primary panel-container">
+          <div class="panel-heading">
+            <h1>
+              Overview
+            </h1>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Total Count</th>
+                      <th>% chance of being populated per episode</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for row in subrecords %}
+                      <tr>
+                        {% for field in row %}
+                          <td>{{ field }}</td>
+                        {% endfor %}
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
