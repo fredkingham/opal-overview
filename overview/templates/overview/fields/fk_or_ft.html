@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h4>
+        {{ field.display_name }}
+      </h4>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6">
+          <strong>Total populated:</strong> {{ field.total_populated }}
+        </div>
+        <div class="col-md-6">
+          <strong>Percentage populated:</strong> {{ field.percentage_populated }}
+        </div>
+      </div>
+      <div class="row content-offset-25">
+        <div class="col-md-6">
+          <strong>Top {{ field.TOP_AMOUNT}} uncoded results</strong>
+          {% if field.top_uncoded %}
+            <table class="table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in field.top_uncoded %}
+                  <tr>
+                    <td>{{ row.0 }}</td>
+                    <td>{{ row.1 }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            No uncoded results entered
+          {% endif %}
+        </div>
+        <div class="col-md-6">
+          <strong>Top {{ field.TOP_AMOUNT}} coded results</strong>
+          {% if field.top_coded %}
+            <table class="table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in field.top_coded %}
+                  <tr>
+                    <td>{{ row.0 }}</td>
+                    <td>{{ row.1 }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            No coded results entered
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

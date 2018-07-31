@@ -1,0 +1,16 @@
+{% extends 'overview/base.html' %}
+{% block overview_contents %}
+<ul class="breadcrumb">
+  <li><a href="{% url "overview_list" %}">Overview home</a></li>
+  <li><a href="{% url "overview_detail_view" api_name=subrecord.get_api_name %}">
+    {{ subrecord.get_display_name }} ({{ fields.0.model_qs.count }})
+  </a></li>
+</ul>
+  {% for field in fields %}
+    <div class="row">
+      <div class="col-md-10 col-md-push-1">
+        {% include field.template %}
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}

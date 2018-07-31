@@ -1,0 +1,22 @@
+{% extends 'app_layouts/layout_base.html' %}
+{% block opal_js %}{% endblock opal_js %}
+
+{% block content %}
+  <div class="content-offset outer-container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-primary panel-container">
+          <div class="panel-heading">
+            <h1>
+              Overview
+            </h1>
+          </div>
+          <div class="panel-body">
+            {% block overview_contents %}
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
