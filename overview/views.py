@@ -3,31 +3,67 @@ Views for the overview Opal Plugin
 """
 from django.contrib.auth import mixins
 from django.views.generic import TemplateView
+from django.utils.text import slugify
+from django.core.urlresolvers import reverse
 
-from opal.core import subrecords
+from opal.core import subrecords, episodes
 from opal import models as omodels
 from opal.core.fields import ForeignKeyOrFreeText
+from opal.core.patient_lists import TaggedPatientList
 
 from overview import overview_utils
 from overview import fields
 
 
-class SuperUserRequired(mixins.UserPassesTestMixin):
+class OverviewBase(mixins.UserPassesTestMixin):
     def test_func(self):
         """
         Override this method to use a different test_func method.
         """
         return self.request.user.is_authenticated() and self.request.user.is_superuser
 
+    def get_category_slug(self, category):
+        return slugify(category.display_name)
 
-class OverviewListView(SuperUserRequired, TemplateView):
-    template_name = "overview/list.html"
+    def get_category_from_slug(self, slug):
+        for i in EpisodeCategory.list():
+            if self.get_category_slug(i) == slug:
+                return i
+
+    def get_category_subrecord_url(self, subrecord, category):
+        return reverse()
+
+
+class OverviewCategoryListView(OverviewBase, TemplateView):
+    template_name = "overview/category_list.html"
+
+    def get_category_url(self, category):
+        pass
+
+    def get_context_data(self, *args, **kwargs):
+        ctx = super(OverviewCategoryListView, self).get_context_data(
+            *args, **kwargs
+        )
+        ctx["tagging"] = omodels.Tagging.objects.values_list(
+            'value', flat=True
+        ).distinct()
+
+        categories = episodes.EpisodeCategory.list()
+
+        ctx["categories"] = [
+            (i.display_name, slugify(i.display_name)) for i in categories
+        ]
+        return ctx
+
+
+class OverviewSubrecordListView(OverviewBase, TemplateView):
+    template_name = "overview/subrecord_list.html"
 
     def get_episode_qs(self):
         return omodels.Episode.objects.all()
 
     def get_context_data(self, *args, **kwargs):
-        ctx = super(OverviewListView, self).get_context_data(
+        ctx = super(OverviewSubrecordListView, self).get_context_data(
             *args, **kwargs
         )
         episode_qs = self.get_episode_qs()
@@ -50,7 +86,7 @@ class OverviewListView(SuperUserRequired, TemplateView):
         return ctx
 
 
-class OverviewDetailView(SuperUserRequired, TemplateView):
+class OverviewDetailView(OverviewBase, TemplateView):
     template_name = "overview/subrecord.html"
 
     IGNORED_FIELDS = {

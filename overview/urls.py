@@ -8,11 +8,21 @@ from overview import views
 urlpatterns = [
     url(
         '^overview/list$',
-        views.OverviewListView.as_view(),
+        views.OverviewSubrecordListView.as_view(),
         name="overview_list"
     ),
     url(
-        '^overview/subrecord/(?P<api_name>[0-9a-z_\-]+)?$',
+        '^overview/all/subrecord/(?P<api_name>[0-9a-z_\-]+)?$',
+        views.OverviewDetailView.as_view(),
+        name="overview_detail_view"
+    ),
+    url(
+        '^overview/category/(?P<category>[0-9a-z_\-]+)?$/subrecord/(?P<api_name>[0-9a-z_\-]+)?$',
+        views.OverviewDetailView.as_view(),
+        name="overview_detail_view"
+    ),
+    url(
+        '^overview/tagging/(?P<tagging>[0-9a-z_\-]+)?$/subrecord/(?P<api_name>[0-9a-z_\-]+)?$',
         views.OverviewDetailView.as_view(),
         name="overview_detail_view"
     ),

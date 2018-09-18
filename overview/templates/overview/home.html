@@ -1,0 +1,15 @@
+{% extends 'overview/base.html' %}
+{% block overview_contents %}
+  <div class="row">
+    <div class="col-md-5">
+      <h3>By Episode Category</h3>
+      <div class="list-group">
+        {% for display_name, api_name in categories %}
+          <a class="list-group-item list-group-item-action" href="{% url 'overview_detail_view' %}">
+            {{ display_name }}
+          </a>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}

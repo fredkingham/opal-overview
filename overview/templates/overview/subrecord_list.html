@@ -16,7 +16,7 @@
               {% for field in row %}
                 <td>
                   {% if forloop.first %}
-                    <a href="/overview/subrecord/{{ field.get_api_name }}">
+                    <a href="{% url "overview_detail_view" api_name=field.get_api_name %}">
                       {{ field.get_display_name }}
                     </a>
                   {% else %}
